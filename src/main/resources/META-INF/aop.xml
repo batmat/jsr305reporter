@@ -1,0 +1,5 @@
+<aspectj>
+    <aspects>
+        <aspect name="net.batmat.jsr305reporter.aspect.JSR305ReporterAspect"/>
+    </aspects>
+</aspectj>
