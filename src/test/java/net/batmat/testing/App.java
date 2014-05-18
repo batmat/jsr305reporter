@@ -5,9 +5,11 @@ import javax.annotation.Nullable;
 
 public class App
 {
-    public void someMethod(@Nullable @Deprecated String pnullable)
+    @Nonnull
+    public String someMethod(@Nullable String pnullable)
     {
         System.out.println( "somemethod " + pnullable );
+        return null;
     }
     
     public void someOtherMethod(@Nonnull String pnonnull, @Nonnull Integer ooo)

@@ -42,34 +42,55 @@
 				<configuration>
 					<executable>java</executable>
 					<arguments>
-						<argument>-javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</argument>
+						<argument>-javaagent:${settings.localRepository}${file.separator}org${file.separator}aspectj${file.separator}aspectjweaver${file.separator}${aspectj.version}${file.separator}aspectjweaver-${aspectj.version}.jar</argument>
 						<argument>-classpath</argument>
-						<commandlineArg>${project.build.directory}/${project.artifactId}-${project.version}.jar:${project.build.directory}/${project.artifactId}-${project.version}-tests.jar</commandlineArg>
+						<!-- Yay, I'm not particularly proud of that. Need to find a better way :-) -->
+						<commandlineArg>${project.build.directory}${file.separator}${project.artifactId}-${project.version}.jar${path.separator}${project.build.directory}${file.separator}${project.artifactId}-${project.version}-tests.jar${path.separator}${settings.localRepository}${file.separator}com${file.separator}google${file.separator}code${file.separator}findbugs${file.separator}jsr305${file.separator}2.0.3${file.separator}jsr305-2.0.3.jar</commandlineArg>
 						<argument>net.batmat.testing.TheMain</argument>
 					</arguments>
 					<workingDirectory>${project.build.directory}</workingDirectory>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.17</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
-		<!-- TODO move to tests -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
 			<version>2.0.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>2.0M10</version>
 		</dependency>
 	</dependencies>
 </project>

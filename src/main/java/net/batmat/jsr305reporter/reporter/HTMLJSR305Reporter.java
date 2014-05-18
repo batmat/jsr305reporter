@@ -24,13 +24,11 @@ public class HTMLJSR305Reporter
 
     public HTMLJSR305Reporter()
     {
-        System.out.println("hiiii");
         write();
     }
 
     public void reportIncorrectNullParameter( JoinPoint joinPoint, int parameterIndex )
     {
-        System.out.println("booombiiiim");
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         errorContent.append( "<li>Passed null to " + "<em>" + methodSignature.getDeclaringType().getPackage().getName()
             + "." + methodSignature.getMethod().getName() + " (" + paramsToString( methodSignature, parameterIndex )
@@ -81,5 +79,16 @@ public class HTMLJSR305Reporter
             }
         }
         return buffer.toString();
+    }
+
+    public void reportIncorrectNullReturn( JoinPoint joinPoint )
+    {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        errorContent.append( "<li>Bad return in " + "<em>" + methodSignature.getDeclaringType().getPackage().getName()
+            + "." + methodSignature.getMethod().getName() + " (" + paramsToString( methodSignature, -1 )
+            + ")" + "</em>" );
+        errorContent.append( ". <span class='exception'>See code at " );
+        errorContent.append( joinPoint.getSourceLocation() );
+        errorContent.append( "</span></li>" );
     }
 }

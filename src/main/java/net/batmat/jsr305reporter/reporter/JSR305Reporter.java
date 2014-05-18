@@ -5,4 +5,6 @@ import org.aspectj.lang.JoinPoint;
 public interface JSR305Reporter
 {
 	void reportIncorrectNullParameter(JoinPoint joinPoint, int parameterIndex);
+
+    void reportIncorrectNullReturn( JoinPoint joinPoint );
 }
