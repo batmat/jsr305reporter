@@ -1,0 +1,43 @@
+JSR 305 Reporter
+----------------
+*This is still a work in progress*.
+
+This Java library helps you check at runtime if what's running actually respects the @Nonnull annotations you 
+may have put in your code.
+
+== Use case
+For example, you may have put something like this in your code:
+
+[source,java]
+--
+public void myMethod(@Nonnull String someParameter) {
+ // bla
+}
+--
+
+And you would like to double-check if some of the running code still calls that method with a null parameter.
+
+This is what JSR305 Reporter is designed for.
+
+== How to use it
+[source, shell]
+--
+$ java -javaagent:jsr305reporter.jar [yourCurrentOptions]
+--
+
+== How does it work
+It uses a java agent. This is a standard feature since Java 5 which in summary provides a simple way to get a callback when loading classes.
+Then, JSR305Reporter uses AspectJ under the hood to ease the work of catching calls and returns to inspect them.
+
+== Seems funny, I'd like to hack on it, where do I start
+Well, I thought it was funny and interesting too. That's why I created the tool in the first place.
+
+The tool is built with Maven. Simply running _mvn clean verify_ on the cloned sources should already generate a 
+jsr305-report.html in the target directory and help get you started.
+(Note that almost everything is still *very* rough at the time of this writing).
+
+== Known issues / TODO
+
+* Provide a single-jar to help use the tool.
+* Currently the tool only knows javax.annotation.Nonnull. May need to support other/specific flavors
+* Currently no external configuration to specify which packages must [not] be analyzed
